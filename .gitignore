@@ -1,6 +1,12 @@
+# Derleme çıktıları
 *.o
-commands/*.o
-mykernel.bin
-blexxos.iso
-iso/boot/mykernel.bin
-.DS_Store
+*.bin
+*.iso
+
+# Klasörler
+iso/
+ach/
+
+# Geçici dosyalar
+*~
+*.tmp
