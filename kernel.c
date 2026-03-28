@@ -17,8 +17,8 @@ int buf_idx = 0;
 
 /* --- VFS (RAM DISK) --- */
 vfs_node_t ram_disk[3] = {
-    {"readme.txt", "BlexxOS v0.0.3 - Stable Terminal Edition.", 40},
-    {"version.txt", "0.0.3", 5},
+    {"readme.txt", "BlexxOS v0.0.4 - Stable Terminal Edition.", 40},
+    {"version.txt", "0.0.4", 5},
     {"author.txt", "p1rater", 7}
 };
 
@@ -170,7 +170,7 @@ unsigned char kbd_us[128] = {
 /* --- ANA GIRIS NOKTASI --- */
 void kernel_main() {
     clear_screen();
-    print_str("BlexxOS v0.0.3 - BLEX Kernel Active.\n");
+    print_str("BlexxOS v0.0.4 - BLEX Kernel Active.\n");
     print_str("Cursor & History support enabled.\n>> ");
     
     while(1) {

@@ -200,7 +200,7 @@ void command_uptime(const char* args) {
 }
 
 void command_uname(const char* args) {
-    print_str("\nBlexxOS 0.0.3-i386");
+    print_str("\nBlexxOS 0.0.4-i386");
 }
 
 void command_whoami(const char* args) {
