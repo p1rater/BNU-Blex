@@ -56,3 +56,9 @@ If you are testing on a device with an **Intel T6670**, the kernel runs natively
 
 ## Why Blexx?
 Yes, Blex would have made more sense, but I preferred adding another 'x' to the end to make it Blexx; there's no particular reason.
+
+---
+
+## 📜 License
+
+This project is licensed under the **GNU General Public License v2.0**. See the [LICENSE](LICENSE) file for the full text.
