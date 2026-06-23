@@ -14,10 +14,6 @@
 es1_superblock_t es1_sb;
 es1_node_t       es1_nodes[ES1_MAX_NODES];
 
-/* Initramfs adresleri (kernel.c'den geliyor) */
-extern uint32_t initramfs_mod_start;
-extern uint32_t initramfs_mod_end;
-
 /* ── String & Memory helpers ─────────────────────────── */
 static int es1_streq(const char *a, const char *b) {
     int i = 0;
@@ -26,9 +22,6 @@ static int es1_streq(const char *a, const char *b) {
 }
 static void es1_strcpy(char *d, const char *s) {
     int i = 0; while (s[i]) { d[i] = s[i]; i++; } d[i] = '\0';
-}
-static int es1_strlen(const char *s) {
-    int i = 0; while (s[i]) i++; return i;
 }
 static void es1_memcpy(void *d, const void *s, uint32_t n) {
     uint8_t *dd = (uint8_t*)d;
@@ -45,7 +38,7 @@ es1_node_t *es1_alloc(const char *path, uint32_t flags);
 es1_node_t *es1_find(const char *path);
 int es1_write(const char *path, const char *data, uint32_t len);
 
-/* ── Initialise the superblock and create standard directories ── */
+/* ── Initialise the superblock — CPIO archive fills in the rest ── */
 void es1_init(void) {
     es1_memzero(&es1_sb, sizeof(es1_sb));
     es1_sb.magic      = ES1_MAGIC;
@@ -57,41 +50,13 @@ void es1_init(void) {
 
     es1_memzero(es1_nodes, sizeof(es1_nodes));
 
-    /* Standard directory tree */
-    static const char *dirs[] = {
-        "/", "/bin", "/etc", "/home", "/home/user",
-        "/dev", "/tmp", "/var", "/sata", "/etc/fetchpng", NULL
-    };
-    for (int i = 0; dirs[i]; i++) {
-        es1_node_t *n = es1_alloc(dirs[i], ES1_FL_USED | ES1_FL_DIR);
-        if (n) {
-            es1_strcpy(n->owner, "root");
-            es1_strcpy(n->perms, "rwxr-xr-x");
-        }
+    /* Minimal root — all directories and files come from initramfs CPIO */
+    es1_node_t *n = es1_alloc("/", ES1_FL_USED | ES1_FL_DIR);
+    if (n) {
+        es1_strcpy(n->owner, "root");
+        es1_strcpy(n->perms, "rwxr-xr-x");
     }
-
-    /* Welcome file */
-    es1_node_t *readme = es1_alloc("/README", ES1_FL_USED);
-    if (readme) {
-        const char *msg = "Welcome to BlexOS v2.0 (x86_64)\n"
-                          "Filesystem: ES1 (Embed File System 1)\n";
-        es1_strcpy(readme->owner, "root");
-        es1_strcpy(readme->perms, "rw-r--r--");
-        es1_write("/README", msg, es1_strlen(msg));
-    }
-
-    /* PNG Enjeksiyonu: CPIO içindeki veriyi manuel olarak ES1'e kopyalar */
-    if (initramfs_mod_start != 0) {
-        es1_node_t *n = es1_alloc("/etc/fetchpng/itsblex.png", ES1_FL_USED);
-        if (n) {
-            uint32_t size = initramfs_mod_end - initramfs_mod_start;
-            if (size > ES1_INLINE_SIZE) size = ES1_INLINE_SIZE;
-            
-            es1_memcpy(n->inline_data, (void*)(uintptr_t)initramfs_mod_start, size);
-            n->size = size;
-        }
-    }
-} /* <── es1_init BURADA BİTİYOR */
+}
 
 /* ── Find a node by exact path ───────────────────────── */
 es1_node_t *es1_find(const char *path) {

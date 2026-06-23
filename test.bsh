@@ -1,0 +1,5 @@
+#!/ec/bsh // ec yani embedded code ve bsh yani blex shell bu arada "#!/ec/bsh" dediğimiz şey shebang
+
+ls // ls komutu gönderir
+wait(5) // 5 saniye bekler
+ls // tekrar ls komutu gönderir

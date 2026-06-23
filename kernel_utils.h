@@ -42,9 +42,10 @@
 #define ES1_MAX_EXTENTS  8
 #define ES1_EXTENT_SIZE  4096
 
-#define ES1_FL_USED  (1u << 0)
-#define ES1_FL_DIR   (1u << 1)
-#define ES1_FL_EXEC  (1u << 2)
+#define ES1_FL_USED    (1u << 0)
+#define ES1_FL_DIR     (1u << 1)
+#define ES1_FL_EXEC    (1u << 2)
+#define ES1_FL_EXTDATA (1u << 3)  /* data lives at ext_data ptr */
 
 typedef struct {
     uint32_t magic;          /* ES1_MAGIC                  */
@@ -63,8 +64,9 @@ typedef struct {
     char     perms[10];                /* rwxr-xr-x style           */
     uint32_t size;                     /* byte count of content     */
     uint32_t mtime;                    /* modification tick         */
+    uint32_t ext_data;                 /* external data ptr (CPIO)  */
+    uint32_t ext_size;                 /* external data size        */
     char     inline_data[ES1_INLINE_SIZE]; /* inline content        */
-    uint8_t  _pad[2];
 } __attribute__((packed)) es1_node_t;         /* 608 bytes */
 
 /* Superblock lives as a special struct; nodes are the array below */

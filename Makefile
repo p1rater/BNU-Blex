@@ -10,7 +10,7 @@ CFLAGS     := -m32 -ffreestanding -fno-stack-protector -fno-builtin -O2 -w -std=
 KERNEL_BIN  := mykernel.bin
 INITRAMFS   := initramfs.cpio
 # fb.c added; boot.s now emits Multiboot2
-OBJS := fonts/ttf_render.o boot.o kernel.o fb.o commands/command_logic.o commands/stb_image_impl.o sata.o es1.o
+OBJS := fonts/ttf_render.o boot.o kernel.o fb.o commands/command_logic.o commands/stb_image_impl.o sata.o es1.o drivers/initramfs.o drivers/cpio.o
 MBEDIT_SRC  := initramfs/bin/mbedit.c
 MBEDIT_BIN  := initramfs/bin/mbedit.brun
 APPS_H = apps/appselector.h apps/terminal.h apps/reboot.h apps/shutdown.h
@@ -23,6 +23,21 @@ LD_LOG  = @echo "  LD      $(KERNEL_BIN)"
 .PHONY: all clean run fix_time
 
 all: fix_time $(MBEDIT_BIN) $(INITRAMFS) $(KERNEL_BIN)
+
+drivers/initramfs.o: drivers/initramfs.c drivers/initramfs.h drivers/cpio.h config/system.h
+	$(CC_LOG)
+	@$(CC) $(CFLAGS) -c drivers/initramfs.c -o drivers/initramfs.o 2>.build_err \
+		|| (cat .build_err && exit 1)
+
+drivers/cpio.o: drivers/cpio.c drivers/cpio.h kernel_utils.h drivers/fs.h config/system.h
+	$(CC_LOG)
+	@$(CC) $(CFLAGS) -c drivers/cpio.c -o drivers/cpio.o 2>.build_err \
+		|| (cat .build_err && exit 1)
+
+drivers/bootlog.o: drivers/bootlog.c drivers/bootlog.h
+	$(CC_LOG)
+	@$(CC) $(CFLAGS) -c drivers/bootlog.c -o drivers/bootlog.o 2>.build_err \
+		|| (cat .build_err && exit 1)
 	@echo "--------------------------------------------------"
 	@echo "  // COMPILED FILES \\"
 	@echo "  Binary: $(KERNEL_BIN)"

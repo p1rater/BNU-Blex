@@ -1,4 +1,55 @@
+# Compiled objects
 *.o
+*.elf
 *.bin
-*.img
 *.iso
+*.img
+*.efi
+*.cpio
+*.cpio.gz
+*.kernel
+*.sys
+
+# Kernel & boot files
+mykernel.bin
+boot.o
+boot.s.o
+kernel.o
+initramfs.cpio
+initramfs.cpio.gz
+iso_root/
+
+# QEMU logs and temporary files
+qemu.log
+*.log
+*.tmp
+*.swp
+*.swo
+*~
+
+# IDE / editor files
+.vscode/
+.idea/
+*.iml
+
+# Archives
+*.zip
+*.tar.gz
+*.tar.xz
+
+# Build directories
+build/
+obj/
+dist/
+
+# Makefile artifacts
+.deps/
+.dirstamp
+*.d
+
+# ISO files
+xlakos.iso
+*.iso
+
+# GRUB temporary dirs
+/tmp/grub.*

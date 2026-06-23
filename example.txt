@@ -1,0 +1,13 @@
+[BLEX] Blex Kernel v0.2 starting...
+[BLEX] CPU: Intel 80386 (32-bit) @ 33MHz
+[BLEX] Memory: 128 MiB, A20 line enabled
+[BLEX] PIT: 1000 Hz, RTC: battery ok
+[BLEX] PCI bus scan: 1 device found
+[initramfs] module loaded at 0x100000, size=4096 bytes
+[initramfs] extracting archive... done
+[initramfs] loading default font (8x16)
+[initramfs] font loaded, console ready
+[es1] Mounting root filesystem from /dev/ram0
+[es1] VFS: ext2, block size 1024, 2048 inodes
+[shell] BSH interpreter initialized
+[shell] Startup script /initramfs/init executed

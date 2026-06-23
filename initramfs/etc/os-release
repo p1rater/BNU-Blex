@@ -1,0 +1,15 @@
+NAME="BlexOS"
+ID=blexos
+PRETTY_NAME="BlexOS x86_64 v0.0.7 (bee)"
+VERSION="0.0.7"
+VERSION_ID="0.0.7"
+VERSION_CODENAME=bee
+BUILD_ID=20260622
+ID_LIKE=unix
+HOME_URL="https://github.com/p1radev/BNU-Blex"
+SUPPORT_URL="https://github.com/p1radev/BNU-Blex"
+BUG_REPORT_URL="https://github.com/p1radev/BNU-Blex"
+LOGO=/drivers/video/logo/logo_blex_clut224.ppm
+ANSI_COLOR="0;36"
+CPE_NAME="cpe:/o:blex:blexos:0.0.7"
+DOCUMENTATION_URL="https://github.com/p1radev/BNU-Blex"
