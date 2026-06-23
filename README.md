@@ -1,5 +1,7 @@
 # BlexOS — x86_64 Hobby OS
 
+<img width="473" height="115" alt="logo_blex_clut224" src="https://github.com/user-attachments/assets/2fea42b6-5ce1-4a0f-b53e-a6f191b25fe6" />
+
 A minimal x86_64 kernel with a framebuffer TTY, embedded filesystem, and dynamic TTF font rendering. Boots via GRUB with Multiboot2.
 
 ## Quick Start
